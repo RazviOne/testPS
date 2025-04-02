@@ -18,4 +18,14 @@ public class ReactionBuilder() {
                 reaction.isLiked()
         );
     }
+
+    public static Reaction toEntity(ReactionDTO reactionDTO) {
+        return new Reaction(
+                reactionDTO.getIdReaction(),
+                reactionDTO.getIdPerson(),
+                reactionDTO.getIdComment(),
+                reactionDTO.getIdPost(),
+                reactionDTO.isLiked()
+        );
+    }
 }

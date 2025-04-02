@@ -54,6 +54,49 @@ public class ReactionController() {
     @GetMapping()
     public ResponseEntity<Integer> getCommentLikedCount(@PathVariable Integer commentID){
         Integer likeCount = reactionService.getCommentLikeCount(commentID);
-        return ResponseEntity.ok(likeCount); 
+        return ResponseEntity.ok(likeCount);
+    }
+
+
+    @PostMapping()
+    public ResponseEntity<Void> addReaction(@Valid @RequestBody ReactionDTO reactionDTO) {
+        try {
+            reactionService.addReaction(reactionDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @PostMapping()
+    public ResponseEntity<Void> updateReaction(@PathVariable Integer reactionID, @Valid @RequestBody ReactionDTO reactionDTO){
+        try {
+            reactionService.updateReaction(reactionID, reactionDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<String> deleteReaction(@PathVariable Integer idReaction) {
+        try {
+            reactionService.deleteReaction(idReaction);
+            return new ResponseEntity<>("Reaction deleted successfully", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @PutMapping()
+    public ResponseEntity<String> updateReactionLikeStatus(@PathVariable Integer idReaction, @RequestParam boolean isLiked) {
+        try {
+            // Call service to update the reaction's 'isLiked' status
+            reactionService.updateReactionLikeStatus(idReaction, isLiked);
+            return new ResponseEntity<>("Reaction like status updated successfully", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

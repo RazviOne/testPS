@@ -39,4 +39,55 @@ public class ReactionService() {
         Integer count = reactionRepository.getCommentLikeCount(commentID);
         return count != null ? count : 0;
     }
+
+
+    public void addReaction(ReactionDTO reactionDTO) {
+        reactionRepository.addReactionToComment(
+                reactionDTO.getIdPerson(),
+                reactionDTO.getIdComment,
+                reactionDTO.getIdPost,
+                reactionDTO.isLiked()
+        );
+    }
+
+    public ReactionDTO getReactionById(Integer reactionID) {
+        Reaction reaction = reactionRepository.findById(reactionID)
+                .orElseThrow(() -> new RuntimeException("Reaction with ID " + reactionID + " not found"));
+
+        return ReactionBuilder.toReactionDTO(reaction);
+    }
+
+    public void updateReaction(Integer reactionID, ReactionDTO reactionDTO) {
+        Reaction existingReaction = reactionRepository.findByIdReaction(reactionID)
+                .orElseThrow(() -> new RuntimeException("Reaction with ID " + reactionID + " not found"));
+
+        // Update fields with new data from ReactionDTO
+        existingReaction.setLiked(reactionDTO.isLiked());
+
+        // Save the updated reaction
+        reactionRepository.save(existingReaction);
+    }
+
+    public void deleteReaction(Integer idReaction) {
+        // Check if the reaction exists before trying to delete it
+        if (!reactionRepository.existsById(idReaction)) {
+            throw new RuntimeException("Reaction with ID " + idReaction + " not found");
+        }
+
+        // Perform the deletion
+        reactionRepository.deleteById(idReaction);
+    }
+
+
+    public void updateReactionLikeStatus(Integer idReaction, boolean isLiked) {
+        // Find the reaction by ID
+        Reaction reaction = reactionRepository.findByIdReaction(idReaction)
+                .orElseThrow(() -> new RuntimeException("Reaction with ID " + idReaction + " not found"));
+
+        // Update the isLiked field
+        reaction.setLiked(isLiked);
+
+        // Save the updated reaction back to the database
+        reactionRepository.save(reaction);
+    }
 }
