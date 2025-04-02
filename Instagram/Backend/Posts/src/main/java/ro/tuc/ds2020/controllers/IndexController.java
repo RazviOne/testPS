@@ -10,7 +10,7 @@ public class IndexController {
 
     @GetMapping(value = "/")
     public ResponseEntity<String> getStatus() {
-        return new ResponseEntity<>("People Microservice is running...", HttpStatus.OK);
+        return new ResponseEntity<>("Post Microservice is running...", HttpStatus.OK);
     }
 
 }
