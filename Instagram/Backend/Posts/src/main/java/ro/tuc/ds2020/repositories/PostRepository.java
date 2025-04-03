@@ -4,12 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.data.repository.query.Param;
-import ro.tuc.ds2020.entities.Person;
+import ro.tuc.ds2020.entities.Post;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface PersonRepository extends JpaRepository<Person, Integer> {
+public interface PostRepository extends JpaRepository<Post, Integer> {
 
     /**
      * Example: JPA generate Query by Field
@@ -37,16 +37,16 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
 //                      @Param("age") int age,
 //                      @Param("admin") Boolean admin);
 
-    @Query(value =
-            "SELECT p " +
-            "FROM Person p " +
-            "WHERE p.isAdmin = true")
-    List<Person> findAdminUsers();
+//    @Query(value =
+//            "SELECT p " +
+//            "FROM Person p " +
+//            "WHERE p.isAdmin = true")
+//    List<Person> findAdminUsers();
 
 //    @Query(value =
 //            "SELECT p " +
 //            "FROM Person p " +
 //            "WHERE p.isAdmin = true")
 //    List<Person> findByUsername();
-    Optional<Person> findByUsername(@Param("username") String username);
+//    Optional<Person> findByUsername(@Param("username") String username);
 }
