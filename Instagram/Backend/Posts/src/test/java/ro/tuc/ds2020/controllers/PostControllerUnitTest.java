@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-public class PersonControllerUnitTest extends Ds2020TestConfig {
+public class PostControllerUnitTest extends Ds2020TestConfig {
 
     @Autowired
     private MockMvc mockMvc;

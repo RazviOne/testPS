@@ -2,11 +2,15 @@ package ro.tuc.ds2020.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
 import org.springframework.data.repository.query.Param;
 import ro.tuc.ds2020.entities.Post;
 
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
@@ -49,4 +53,19 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 //            "WHERE p.isAdmin = true")
 //    List<Person> findByUsername();
 //    Optional<Person> findByUsername(@Param("username") String username);
+=======
+
+public interface PostRepository extends JpaRepository<Post, Integer> {
+
+    List<Post> findByIdPerson(Integer idPerson);
+
+    List<Post> findByStatus(String status);
+
+    @Query("SELECT p FROM Post p WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Post> searchByTitle(@Param("keyword") String keyword);
+
+    List<Post> findAllByOrderByTotalVotesDesc();
+
+    List<Post> findByNoMoreCommentsTrue();
+>>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
 }

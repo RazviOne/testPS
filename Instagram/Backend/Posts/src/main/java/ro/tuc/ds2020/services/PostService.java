@@ -20,7 +20,10 @@ public class PostService {
     private static final Logger LOGGER = LoggerFactory.getLogger(PostService.class);
     private final PostRepository postRepository;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
     @Autowired
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
@@ -33,6 +36,7 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+<<<<<<< HEAD
 //    public List<PostDTO> findAdmins() {
 //        List<Person> personList = personRepository.findAdminUsers();
 //        return personList.stream()
@@ -48,6 +52,16 @@ public class PostService {
             throw new ResourceNotFoundException(Post.class.getSimpleName() + " with id: " + id);
         }
         return PostBuilder.toPostDetailsDTO(prosumerOptional.get());
+=======
+    public PostDetailsDTO findPostById(Integer id) {
+        Optional<Post> postOptional = postRepository.findById(id);
+
+        if (!postOptional.isPresent()) {
+            LOGGER.error("Post with id {} was not found in db", id);
+            throw new ResourceNotFoundException(Post.class.getSimpleName() + " with id: " + id);
+        }
+        return PostBuilder.toPostDetailsDTO(postOptional.get());
+>>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
     }
 
     public Integer insert(PostDetailsDTO postDTO) {
@@ -64,6 +78,7 @@ public class PostService {
         LOGGER.debug("Post with id {} was updated in db", post.getIdPost());
     }
 
+<<<<<<< HEAD
     public void delete(Integer id){
         postRepository.deleteById(id);
     }
@@ -82,4 +97,13 @@ public class PostService {
 //        return null;
 //    }
 
+=======
+    public void delete(Integer id) {
+        postRepository.deleteById(id);
+    }
+
+    public List<PostDTO> findPersons() {
+        return null;
+    }
+>>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
 }

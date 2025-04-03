@@ -2,6 +2,7 @@ package ro.tuc.ds2020.dtos;
 
 import org.springframework.hateoas.RepresentationModel;
 
+<<<<<<< HEAD
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
@@ -16,10 +17,18 @@ public class PostDTO extends RepresentationModel<PostDTO> {
     private Byte[] image;
     private Integer totalVotes;
     private Integer idParent;
+=======
+public class PostDTO extends RepresentationModel<PostDTO> {
+    private Integer idPost;
+    private String title;
+    private String status;
+    private Integer totalVotes;
+>>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
 
     public PostDTO() {
     }
 
+<<<<<<< HEAD
     public PostDTO(Integer idPost, Integer idPerson, String title, String text, Date dateCreated, String status,
                    Byte[] image, Integer totalVotes, Integer idParent) {
         this.idPost = idPost;
@@ -30,6 +39,13 @@ public class PostDTO extends RepresentationModel<PostDTO> {
         this.image = image;
         this.totalVotes = totalVotes;
         this.idParent = idParent;
+=======
+    public PostDTO(Integer idPost, String title, String status, Integer totalVotes) {
+        this.idPost = idPost;
+        this.title = title;
+        this.status = status;
+        this.totalVotes = totalVotes;
+>>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
     }
 
     public Integer getIdPost() {
@@ -40,6 +56,7 @@ public class PostDTO extends RepresentationModel<PostDTO> {
         this.idPost = idPost;
     }
 
+<<<<<<< HEAD
     public Integer getIdPerson() {
         return idPerson;
     }
@@ -48,6 +65,8 @@ public class PostDTO extends RepresentationModel<PostDTO> {
         this.idPerson = idPerson;
     }
 
+=======
+>>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
     public String getTitle() {
         return title;
     }
@@ -56,6 +75,7 @@ public class PostDTO extends RepresentationModel<PostDTO> {
         this.title = title;
     }
 
+<<<<<<< HEAD
     public String getText() {
         return text;
     }
@@ -72,6 +92,8 @@ public class PostDTO extends RepresentationModel<PostDTO> {
         this.dateCreated = dateCreated;
     }
 
+=======
+>>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
     public String getStatus() {
         return status;
     }
@@ -80,6 +102,7 @@ public class PostDTO extends RepresentationModel<PostDTO> {
         this.status = status;
     }
 
+<<<<<<< HEAD
     public Byte[] getImage() {
         return image;
     }
@@ -88,6 +111,8 @@ public class PostDTO extends RepresentationModel<PostDTO> {
         this.image = image;
     }
 
+=======
+>>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
     public Integer getTotalVotes() {
         return totalVotes;
     }
@@ -96,6 +121,7 @@ public class PostDTO extends RepresentationModel<PostDTO> {
         this.totalVotes = totalVotes;
     }
 
+<<<<<<< HEAD
     public Integer getIdParent() {
         return idParent;
     }
@@ -126,4 +152,9 @@ public class PostDTO extends RepresentationModel<PostDTO> {
                 Arrays.hashCode(this.image), this.totalVotes, this.idParent);
     }
 
+=======
+    public Integer getId() {
+        return this.idPost;
+    }
+>>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
 }
