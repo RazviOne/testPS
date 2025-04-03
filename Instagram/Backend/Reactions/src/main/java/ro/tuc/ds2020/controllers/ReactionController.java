@@ -18,7 +18,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/reactions")
-public class ReactionController() {
+public class ReactionController {
     private final ReactionService reactionService;
 
     @Autowired

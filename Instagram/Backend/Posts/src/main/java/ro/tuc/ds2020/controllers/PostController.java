@@ -13,8 +13,6 @@ import javax.validation.Valid;
 <<<<<<< HEAD
 import java.net.HttpURLConnection;
 import java.net.URL;
-=======
->>>>>>> 03e97e513a0b27cae2f52810fd38e2d4f6e37501
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
