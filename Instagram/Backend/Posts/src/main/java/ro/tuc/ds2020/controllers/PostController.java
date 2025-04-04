@@ -17,7 +17,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/posts")  // 🔁 update de la "/person"
+@RequestMapping(value = "/posts")
 public class PostController {
 
     private final PostService postService;
