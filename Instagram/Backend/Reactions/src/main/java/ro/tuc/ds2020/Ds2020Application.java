@@ -1,4 +1,4 @@
-package ro.tuc.ds2020;
+package src.main.java.ro.tuc.ds2020;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

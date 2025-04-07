@@ -1,19 +1,19 @@
-package ro.tuc.ds2020.services;
+package src.main.java.ro.tuc.ds2020.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.tuc.ds2020.dtos.ReactionDTO;
-import ro.tuc.ds2020.dtos.builders.ReactionBuilder;
-import ro.tuc.ds2020.repositories.ReactionRepository;
+import ro.tuc.ds2020.entities.Reaction;
+import src.main.java.ro.tuc.ds2020.dtos.builders.ReactionBuilder;
+import src.main.java.ro.tuc.ds2020.repositories.ReactionRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
-
 @Service
-public class ReactionService() {
+public class ReactionService {
+
     private final ReactionRepository reactionRepository;
 
     @Autowired
@@ -22,15 +22,21 @@ public class ReactionService() {
     }
 
     public List<ReactionDTO> getPostReactions(Integer postID) {
-        return reactionRepository.getPostReactions(postID)
-                .map(ReactionBuilder::toReactionDTO)
-                .orElseThrow(() -> new RuntimeException("Post's Reaction with Post ID " + id + " not found"));
+        List<Reaction> reactions = reactionRepository.findReactionsByPostId(postID);
+        if (reactions.isEmpty()) {
+            throw new RuntimeException("No reactions found for post with ID " + postID);
+        }
+        return reactions.stream().map(ReactionBuilder::toReactionDTO).collect(Collectors.toList());
     }
+
     public List<ReactionDTO> getCommentReactions(Integer commentID) {
-        return reactionRepository.getCommentReactions(commentID)
-                .map(ReactionBuilder::toReactionDTO)
-                .orElseThrow(() -> new RuntimeException("Comment's Reaction with Comment ID " + id + " not found"));
+        List<Reaction> reactions = reactionRepository.findReactionsByCommentId(commentID);
+        if (reactions.isEmpty()) {
+            throw new RuntimeException("No reactions found for comment with ID " + commentID);
+        }
+        return reactions.stream().map(ReactionBuilder::toReactionDTO).collect(Collectors.toList());
     }
+
     public Integer getPostLikeCount(Integer postID) {
         Integer count = reactionRepository.getPostLikeCount(postID);
         return count != null ? count : 0;
@@ -41,12 +47,12 @@ public class ReactionService() {
         return count != null ? count : 0;
     }
 
-
+    @Transactional
     public void addReaction(ReactionDTO reactionDTO) {
-        reactionRepository.addReactionToComment(
+        reactionRepository.addReaction(
                 reactionDTO.getIdPerson(),
-                reactionDTO.getIdComment,
-                reactionDTO.getIdPost,
+                reactionDTO.getIdComment(),
+                reactionDTO.getIdPost(),
                 reactionDTO.isLiked()
         );
     }
@@ -58,37 +64,29 @@ public class ReactionService() {
         return ReactionBuilder.toReactionDTO(reaction);
     }
 
+    @Transactional
     public void updateReaction(Integer reactionID, ReactionDTO reactionDTO) {
         Reaction existingReaction = reactionRepository.findByIdReaction(reactionID)
                 .orElseThrow(() -> new RuntimeException("Reaction with ID " + reactionID + " not found"));
 
-        // Update fields with new data from ReactionDTO
         existingReaction.setLiked(reactionDTO.isLiked());
-
-        // Save the updated reaction
         reactionRepository.save(existingReaction);
     }
 
+    @Transactional
     public void deleteReaction(Integer idReaction) {
-        // Check if the reaction exists before trying to delete it
         if (!reactionRepository.existsById(idReaction)) {
             throw new RuntimeException("Reaction with ID " + idReaction + " not found");
         }
-
-        // Perform the deletion
         reactionRepository.deleteById(idReaction);
     }
 
-
+    @Transactional
     public void updateReactionLikeStatus(Integer idReaction, boolean isLiked) {
-        // Find the reaction by ID
         Reaction reaction = reactionRepository.findByIdReaction(idReaction)
                 .orElseThrow(() -> new RuntimeException("Reaction with ID " + idReaction + " not found"));
 
-        // Update the isLiked field
         reaction.setLiked(isLiked);
-
-        // Save the updated reaction back to the database
         reactionRepository.save(reaction);
     }
 }
