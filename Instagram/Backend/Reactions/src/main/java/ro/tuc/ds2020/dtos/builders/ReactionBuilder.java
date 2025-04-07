@@ -1,10 +1,10 @@
 package ro.tuc.ds2020.dtos.builders;
 
-import ro.tuc.ds2020.dtos.PostDTO;
-import ro.tuc.ds2020.dtos.PostDetailsDTO;
-import ro.tuc.ds2020.entities.Post;
 
-public class ReactionBuilder() {
+import ro.tuc.ds2020.dtos.ReactionDTO;
+import ro.tuc.ds2020.entities.Reaction;
+
+public class ReactionBuilder {
     private ReactionBuilder() {
 
     }

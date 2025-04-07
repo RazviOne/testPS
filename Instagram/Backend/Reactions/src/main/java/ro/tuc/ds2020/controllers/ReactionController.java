@@ -5,9 +5,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.tuc.ds2020.dtos.PostDTO;
-import ro.tuc.ds2020.dtos.PostDetailsDTO;
-import ro.tuc.ds2020.services.PostService;
+import ro.tuc.ds2020.dtos.ReactionDTO;
+import ro.tuc.ds2020.services.ReactionService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -18,7 +17,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/reactions")
-public class ReactionController() {
+public class ReactionController {
     private final ReactionService reactionService;
 
     @Autowired

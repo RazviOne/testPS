@@ -2,13 +2,14 @@ package ro.tuc.ds2020.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.tuc.ds2020.dtos.TagDTO;
-import ro.tuc.ds2020.dtos.builders.TagBuilder;
-import ro.tuc.ds2020.entities.Tag;
-import ro.tuc.ds2020.repositories.TagRepository;
+import ro.tuc.ds2020.dtos.ReactionDTO;
+import ro.tuc.ds2020.dtos.builders.ReactionBuilder;
+import ro.tuc.ds2020.repositories.ReactionRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 
 @Service
