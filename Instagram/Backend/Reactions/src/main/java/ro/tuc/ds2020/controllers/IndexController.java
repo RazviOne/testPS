@@ -1,4 +1,4 @@
-package ro.tuc.ds2020.controllers;
+package src.main.java.ro.tuc.ds2020.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
