@@ -101,7 +101,7 @@ public class PersonController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<PersonDTO> deletePerson(@PathVariable("id") Integer idPerson){
+    public ResponseEntity<PersonDTO> deletePerson(@PathVariable("id") Integer idPerson) {
         PersonDTO failedDto = new PersonDTO();
         failedDto.setIdPerson(-1);
         try {
@@ -109,14 +109,14 @@ public class PersonController {
             personService.delete(idPerson);
 
             try {
-                // TO-DO: Database sync
+                // TO-DO: Database Syncronization for Posts and Reactions Microservice
 //                URL url = new URL("http://localhost:8081/deviceLink/person/" + personId);
 //                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 //                connection.setRequestMethod("DELETE");
 //                int status = connection.getResponseCode();
 //                System.out.print("Status: " + status + "\n");
-//                return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
-            } catch (Exception e){
+                return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+            } catch (Exception e) {
                 return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
             }
         } catch (Exception e) {
