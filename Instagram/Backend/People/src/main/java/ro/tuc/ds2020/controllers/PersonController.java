@@ -9,8 +9,6 @@ import ro.tuc.ds2020.dtos.PersonDTO;
 import ro.tuc.ds2020.services.PersonService;
 
 import javax.validation.Valid;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;

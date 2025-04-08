@@ -3,14 +3,13 @@ package ro.tuc.ds2020.dtos;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
 public class PersonDTO extends RepresentationModel<PersonDTO> {
 
-    @NotNull
     private Integer idPerson;
-    @NotNull
     private String name;
     @NotNull
     private String username;
@@ -26,8 +25,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO> {
     private String email;
     @NotNull
     private String phoneNumber;
-    @NotNull
-    private Date birthDate;
+    private LocalDateTime birthDate;
     private String homeCity;
 
 
@@ -35,9 +33,24 @@ public class PersonDTO extends RepresentationModel<PersonDTO> {
     }
 
     public PersonDTO(Integer idPerson, String name, String username, String password, Integer userScore,
-                     Boolean isAdmin, Boolean isBanned, String email, String phoneNumber, Date birthDate,
+                     Boolean isAdmin, Boolean isBanned, String email, String phoneNumber, LocalDateTime birthDate,
                      String homeCity) {
         this.idPerson = idPerson;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.userScore = userScore;
+        this.isAdmin = isAdmin;
+        this.isBanned = isBanned;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.birthDate = birthDate;
+        this.homeCity = homeCity;
+    }
+
+    public PersonDTO(String name, String username, String password, Integer userScore,
+                     Boolean isAdmin, Boolean isBanned, String email, String phoneNumber, LocalDateTime birthDate,
+                     String homeCity) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -122,11 +135,11 @@ public class PersonDTO extends RepresentationModel<PersonDTO> {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getBirthDate() {
+    public LocalDateTime getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDateTime birthDate) {
         this.birthDate = birthDate;
     }
 

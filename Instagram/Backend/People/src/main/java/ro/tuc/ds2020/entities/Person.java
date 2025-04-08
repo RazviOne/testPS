@@ -3,7 +3,7 @@ package ro.tuc.ds2020.entities;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Person  implements Serializable {
@@ -37,7 +37,7 @@ public class Person  implements Serializable {
     private String phoneNumber;
 
     @Column(name = "birthDate", nullable = true)
-    private Date birthDate;
+    private LocalDateTime birthDate;
 
     @Column(name = "homeCity", nullable = true)
     private String homeCity;
@@ -46,7 +46,7 @@ public class Person  implements Serializable {
     }
 
     public Person(String name, String username, String password, Integer userScore, Boolean isAdmin, Boolean isBanned,
-                  String email, String phoneNumber, Date birthDate, String homeCity) {
+                  String email, String phoneNumber, LocalDateTime birthDate, String homeCity) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -131,11 +131,11 @@ public class Person  implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getBirthDate() {
+    public LocalDateTime getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDateTime birthDate) {
         this.birthDate = birthDate;
     }
 
