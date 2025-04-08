@@ -3,16 +3,17 @@ package ro.tuc.ds2020.entities;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 @Entity
-public class Person  implements Serializable{
-
-//    private static final long serialVersionUID = 1L;
+public class Person  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idPerson;
+
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "username", nullable = false)
     private String username;
@@ -20,53 +21,50 @@ public class Person  implements Serializable{
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "address", nullable = false)
-    private String address;
-
-    @Column(name = "age", nullable = false)
-    private int age;
+    @Column(name = "userScore", nullable = false)
+    private Integer userScore;
 
     @Column(name = "isAdmin", nullable = false)
     private Boolean isAdmin;
 
+    @Column(name = "isBanned", nullable = false)
+    private Boolean isBanned;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "phoneNumber", nullable = false)
+    private String phoneNumber;
+
+    @Column(name = "birthDate", nullable = true)
+    private Date birthDate;
+
+    @Column(name = "homeCity", nullable = true)
+    private String homeCity;
 
     public Person() {
     }
 
-    public Person(String username, String password, String name, String address, int age, Boolean isAdmin) {
-        this.username = username;
-        this.password = password;
+    public Person(String name, String username, String password, Integer userScore, Boolean isAdmin, Boolean isBanned,
+                  String email, String phoneNumber, Date birthDate, String homeCity) {
         this.name = name;
-        this.address = address;
-        this.age = age;
-        this.isAdmin = isAdmin;
-    }
-
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
+        this.userScore = userScore;
+        this.isAdmin = isAdmin;
+        this.isBanned = isBanned;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.birthDate = birthDate;
+        this.homeCity = homeCity;
+    }
+
+    public Integer getIdPerson() {
+        return idPerson;
+    }
+
+    public void setIdPerson(Integer idPerson) {
+        this.idPerson = idPerson;
     }
 
     public String getName() {
@@ -77,28 +75,76 @@ public class Person  implements Serializable{
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getUsername() {
+        return username;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public int getAge() {
-        return age;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getUserScore() {
+        return userScore;
+    }
+
+    public void setUserScore(Integer userScore) {
+        this.userScore = userScore;
     }
 
     public Boolean getIsAdmin() {
-        return this.isAdmin;
+        return isAdmin;
     }
 
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public Boolean getIsBanned() {
+        return isBanned;
+    }
+
+    public void setIsBanned(Boolean isBanned) {
+        this.isBanned = isBanned;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getHomeCity() {
+        return homeCity;
+    }
+
+    public void setHomeCity(String homeCity) {
+        this.homeCity = homeCity;
     }
 
 }

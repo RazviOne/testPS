@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.tuc.ds2020.dtos.PersonDTO;
-import ro.tuc.ds2020.dtos.PersonDetailsDTO;
 import ro.tuc.ds2020.services.PersonService;
 
 import javax.validation.Valid;
@@ -35,24 +34,24 @@ public class PersonController {
         List<PersonDTO> dtos = personService.findPersons();
         for (PersonDTO dto : dtos) {
             Link personLink = linkTo(methodOn(PersonController.class)
-                    .getPersonById(dto.getId())).withRel("personDetails");
+                    .getPersonById(dto.getIdPerson())).withRel("personDetails");
             dto.add(personLink);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<Integer> insertPerson(@Valid @RequestBody PersonDetailsDTO personDTO) {
-        Integer personID = personService.insert(personDTO);
-        return new ResponseEntity<>(personID, HttpStatus.CREATED);
+    public ResponseEntity<Integer> insertPerson(@Valid @RequestBody PersonDTO personDTO) {
+        Integer idPerson = personService.insert(personDTO);
+        return new ResponseEntity<>(idPerson, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PersonDetailsDTO> getPersonById(@PathVariable("id") Integer personId) {
-        PersonDetailsDTO failedDto = new PersonDetailsDTO();
-        failedDto.setId(-1);
+    public ResponseEntity<PersonDTO> getPersonById(@PathVariable("id") Integer idPerson) {
+        PersonDTO failedDto = new PersonDTO();
+        failedDto.setIdPerson(-1);
         try {
-            PersonDetailsDTO dto = personService.findPersonById(personId);
+            PersonDTO dto = personService.findPersonById(idPerson);
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(failedDto, HttpStatus.NOT_FOUND);
@@ -60,12 +59,12 @@ public class PersonController {
     }
 
     @GetMapping(value = "/authenticate/{username}/{password}")
-    public ResponseEntity<PersonDetailsDTO> authenticateUser(@PathVariable("username") String username,
-                                                             @PathVariable("password") String password) {
-        PersonDetailsDTO failedDto = new PersonDetailsDTO();
-        failedDto.setId(-1);
+    public ResponseEntity<PersonDTO> authenticateUser(@PathVariable("username") String username,
+                                                      @PathVariable("password") String password) {
+        PersonDTO failedDto = new PersonDTO();
+        failedDto.setIdPerson(-1);
         try {
-            PersonDetailsDTO dto = personService.authenticateUser(username, password);
+            PersonDTO dto = personService.authenticateUser(username, password);
             if(dto == null){
                 return new ResponseEntity<>(failedDto, HttpStatus.NOT_FOUND);
             }
@@ -76,14 +75,15 @@ public class PersonController {
     }
 
     @PostMapping(value = "/{id}")
-    public ResponseEntity<PersonDetailsDTO> updatePerson(@Valid @RequestBody PersonDetailsDTO personDetailsDTO,
-                                                         @PathVariable("id") Integer personId){
-        PersonDetailsDTO failedDto = new PersonDetailsDTO();
-        failedDto.setId(-1);
+    public ResponseEntity<PersonDTO> updatePerson(@Valid @RequestBody PersonDTO personDTO,
+                                                  @PathVariable("id") Integer idPerson){
+        PersonDTO failedDto = new PersonDTO();
+        failedDto.setIdPerson(-1);
         try {
-            personService.findPersonById(personId);
-            personService.update(personId, personDetailsDTO);
-            return new ResponseEntity<>(personDetailsDTO, HttpStatus.OK);
+            personService.findPersonById(idPerson);
+            personDTO.setIdPerson(idPerson);
+            personService.update(personDTO);
+            return new ResponseEntity<>(personDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(failedDto, HttpStatus.NOT_FOUND);
         }
@@ -94,27 +94,28 @@ public class PersonController {
         List<PersonDTO> dtos = personService.findAdmins();
         for (PersonDTO dto : dtos) {
             Link personLink = linkTo(methodOn(PersonController.class)
-                    .getPersonById(dto.getId())).withRel("personDetails");
+                    .getPersonById(dto.getIdPerson())).withRel("personDetails");
             dto.add(personLink);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<PersonDetailsDTO> deletePerson(@PathVariable("id") Integer personId){
-        PersonDetailsDTO failedDto = new PersonDetailsDTO();
-        failedDto.setId(-1);
+    public ResponseEntity<PersonDTO> deletePerson(@PathVariable("id") Integer idPerson){
+        PersonDTO failedDto = new PersonDTO();
+        failedDto.setIdPerson(-1);
         try {
-            PersonDetailsDTO dto = personService.findPersonById(personId);
-            personService.delete(personId);
+            PersonDTO dto = personService.findPersonById(idPerson);
+            personService.delete(idPerson);
 
             try {
-                URL url = new URL("http://localhost:8081/deviceLink/person/" + personId);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("DELETE");
-                int status = connection.getResponseCode();
-                System.out.print("Status: " + status + "\n");
-                return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+                // TO-DO: Database sync
+//                URL url = new URL("http://localhost:8081/deviceLink/person/" + personId);
+//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//                connection.setRequestMethod("DELETE");
+//                int status = connection.getResponseCode();
+//                System.out.print("Status: " + status + "\n");
+//                return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
             } catch (Exception e){
                 return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
             }

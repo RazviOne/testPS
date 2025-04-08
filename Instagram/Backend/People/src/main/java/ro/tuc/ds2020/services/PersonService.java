@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.tuc.ds2020.controllers.handlers.exceptions.model.ResourceNotFoundException;
 import ro.tuc.ds2020.dtos.PersonDTO;
-import ro.tuc.ds2020.dtos.PersonDetailsDTO;
 import ro.tuc.ds2020.dtos.builders.PersonBuilder;
 import ro.tuc.ds2020.entities.Person;
 import ro.tuc.ds2020.repositories.PersonRepository;
@@ -40,40 +39,40 @@ public class PersonService {
                 .collect(Collectors.toList());
     }
 
-    public PersonDetailsDTO findPersonById(Integer id) {
-        Optional<Person> prosumerOptional = personRepository.findById(id);
+    public PersonDTO findPersonById(Integer idPerson) {
+        Optional<Person> prosumerOptional = personRepository.findById(idPerson);
 
         if (!prosumerOptional.isPresent()) {
-            LOGGER.error("Person with id {} was not found in db", id);
-            throw new ResourceNotFoundException(Person.class.getSimpleName() + " with id: " + id);
+            LOGGER.error("Person with idPerson {} was not found in db", idPerson);
+            throw new ResourceNotFoundException(Person.class.getSimpleName() + " with id: " + idPerson);
         }
-        return PersonBuilder.toPersonDetailsDTO(prosumerOptional.get());
+        return PersonBuilder.toPersonDTO(prosumerOptional.get());
     }
 
-    public Integer insert(PersonDetailsDTO personDTO) {
+    public Integer insert(PersonDTO personDTO) {
         Person person = PersonBuilder.toEntity(personDTO);
         person = personRepository.save(person);
-        LOGGER.debug("Person with id {} was inserted in db", person.getId());
-        return person.getId();
+        LOGGER.debug("Person with idPerson {} was inserted in db", person.getIdPerson());
+        return person.getIdPerson();
     }
 
-    public void update(Integer id, PersonDetailsDTO personDetailsDTO) {
-        Person person = PersonBuilder.toEntity(personDetailsDTO);
-        person.setId(id);
+    public void update(PersonDTO personDTO) {
+        Person person = PersonBuilder.toEntity(personDTO);
+        person.setIdPerson(personDTO.getIdPerson());
         personRepository.save(person);
-        LOGGER.debug("Person with id {} was updated in db", person.getId());
+        LOGGER.debug("Person with idPerson {} was updated in db", person.getIdPerson());
     }
 
-    public void delete(Integer id){
-        personRepository.deleteById(id);
+    public void delete(Integer idPerson){
+        personRepository.deleteById(idPerson);
     }
 
-    public PersonDetailsDTO authenticateUser(String username, String password){
+    public PersonDTO authenticateUser(String username, String password) {
         Optional<Person> person = personRepository.findByUsername(username);
 
         if(person.isPresent()) {
-            if(password.equals(person.get().getPassword())) {
-                return PersonBuilder.toPersonDetailsDTO(person.get());
+            if(password.equals(person.get().getPassword())){
+                return PersonBuilder.toPersonDTO(person.get());
             }
             else{
                 return null;
