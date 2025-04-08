@@ -10,6 +10,7 @@ import java.util.Objects;
 public class PersonDTO extends RepresentationModel<PersonDTO> {
 
     private Integer idPerson;
+    @NotNull
     private String name;
     @NotNull
     private String username;
