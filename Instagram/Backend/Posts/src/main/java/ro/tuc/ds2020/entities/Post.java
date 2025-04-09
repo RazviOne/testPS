@@ -8,38 +8,44 @@ import java.time.LocalDateTime;
 @Entity
 public class Post  implements Serializable{
 
-//    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPost;
 
+    @Column(name = "idPerson", nullable = false)
     private Integer idPerson;
 
-    @Column(length = 255)
+    @Column(name = "idParent", nullable = true)
+    private Integer idParent;
+
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(length = 255)
+    @Column(name = "text", nullable = false)
     private String text;
 
+    @Column(name = "dateCreated", nullable = false)
     private LocalDateTime dateCreated;
 
-    @Column(length = 255)
+    @Column(name = "status", nullable = false)
     private String status;
 
-    @Lob
+    @Column(name = "image", nullable = true)
     private byte[] image;
 
+    @Column(name = "totalVotes", nullable = false)
     private Integer totalVotes;
 
+    @Column(name = "noMoreComments", nullable = false)
     private Boolean noMoreComments;
 
     public Post() {
     }
 
-    public Post(Integer idPerson, String title, String text, LocalDateTime dateCreated,
+    public Post(Integer idPerson, Integer idParent, String title, String text, LocalDateTime dateCreated,
                 String status, byte[] image, Integer totalVotes, Boolean noMoreComments) {
         this.idPerson = idPerson;
+        this.idParent = idParent;
         this.title = title;
         this.text = text;
         this.dateCreated = dateCreated;
@@ -63,6 +69,14 @@ public class Post  implements Serializable{
 
     public void setIdPerson(Integer idPerson) {
         this.idPerson = idPerson;
+    }
+
+    public Integer getIdParent() {
+        return idParent;
+    }
+
+    public void setIdParent(Integer idParent) {
+        this.idParent = idParent;
     }
 
     public String getTitle() {

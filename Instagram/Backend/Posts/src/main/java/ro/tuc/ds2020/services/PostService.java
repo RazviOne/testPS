@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.tuc.ds2020.controllers.handlers.exceptions.model.ResourceNotFoundException;
 import ro.tuc.ds2020.dtos.PostDTO;
-import ro.tuc.ds2020.dtos.PostDetailsDTO;
 import ro.tuc.ds2020.dtos.builders.PostBuilder;
 import ro.tuc.ds2020.entities.Post;
 import ro.tuc.ds2020.repositories.PostRepository;

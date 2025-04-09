@@ -1,7 +1,6 @@
 package ro.tuc.ds2020.dtos.builders;
 
 import ro.tuc.ds2020.dtos.PostDTO;
-import ro.tuc.ds2020.dtos.PostDetailsDTO;
 import ro.tuc.ds2020.entities.Post;
 
 public class PostBuilder {
@@ -18,23 +17,9 @@ public class PostBuilder {
         );
     }
 
-    public static PostDetailsDTO toPostDetailsDTO(Post post) {
-        return new PostDetailsDTO(
-                post.getIdPost(),
-                post.getIdPerson(),
-                post.getTitle(),
-                post.getText(),
-                post.getDateCreated(),
-                post.getStatus(),
-                post.getImage(),
-                post.getTotalVotes(),
-                post.getNoMoreComments()
-        );
-    }
-
-    public static Post toEntity(PostDetailsDTO dto) {
+    public static Post toEntity(PostDTO dto) {
         return new Post(
-                dto.getIdPerson(),
+                dto.get(),
                 dto.getTitle(),
                 dto.getText(),
                 dto.getDateCreated(),
