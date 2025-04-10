@@ -9,6 +9,8 @@ import ro.tuc.ds2020.dtos.PersonDTO;
 import ro.tuc.ds2020.services.PersonService;
 
 import javax.validation.Valid;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -16,11 +18,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/person")
+@RequestMapping(value = "/people")
 public class PersonController {
 
     private final PersonService personService;
-
 
     @Autowired
     public PersonController(PersonService personService) {
@@ -106,13 +107,24 @@ public class PersonController {
             PersonDTO dto = personService.findPersonById(idPerson);
             personService.delete(idPerson);
 
+            // Database Syncronization
             try {
-                // TO-DO: Database Syncronization for Posts and Reactions Microservice
-//                URL url = new URL("http://localhost:8081/deviceLink/person/" + personId);
-//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//                connection.setRequestMethod("DELETE");
-//                int status = connection.getResponseCode();
-//                System.out.print("Status: " + status + "\n");
+                // Delete all Posts from the deleted Person
+                URL urlPosts = new URL("http://localhost:8081/posts/person/" + idPerson);
+                HttpURLConnection connectionPosts = (HttpURLConnection) urlPosts.openConnection();
+                connectionPosts.setRequestMethod("DELETE");
+                System.out.print("Status: " + connectionPosts.getResponseCode() + "\n");
+                connectionPosts.disconnect();
+            } catch (Exception ignored) {}
+
+            try {
+                // Delete all Reactions from the deleted Person
+                URL urlReactions = new URL("http://localhost:8082/reactions/person/" + idPerson);
+                HttpURLConnection connectionReactions = (HttpURLConnection) urlReactions.openConnection();
+                connectionReactions.setRequestMethod("DELETE");
+                System.out.print("Status: " + connectionReactions.getResponseCode() + "\n");
+                connectionReactions.disconnect();
+
                 return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
             } catch (Exception e) {
                 return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);

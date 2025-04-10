@@ -31,35 +31,32 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    public PostDetailsDTO findPostById(Integer id) {
-        Optional<Post> postOptional = postRepository.findById(id);
+    public PostDTO findPostById(Integer idPost) {
+        Optional<Post> postOptional = postRepository.findById(idPost);
 
         if (!postOptional.isPresent()) {
-            LOGGER.error("Post with id {} was not found in db", id);
-            throw new ResourceNotFoundException(Post.class.getSimpleName() + " with id: " + id);
+            LOGGER.error("Post with idPost {} was not found in db", idPost);
+            throw new ResourceNotFoundException(Post.class.getSimpleName() + " with idPost: " + idPost);
         }
-        return PostBuilder.toPostDetailsDTO(postOptional.get());
+        return PostBuilder.toPostDTO(postOptional.get());
     }
 
-    public Integer insert(PostDetailsDTO postDTO) {
+    public Integer insert(PostDTO postDTO) {
         Post post = PostBuilder.toEntity(postDTO);
         post = postRepository.save(post);
-        LOGGER.debug("Post with id {} was inserted in db", post.getIdPost());
+        LOGGER.debug("Post with idPost {} was inserted in db", post.getIdPost());
         return post.getIdPost();
     }
 
-    public void update(Integer id, PostDetailsDTO postDetailsDTO) {
-        Post post = PostBuilder.toEntity(postDetailsDTO);
-        post.setIdPost(id);
+    public void update(PostDTO postDTO) {
+        Post post = PostBuilder.toEntity(postDTO);
+        post.setIdPost(postDTO.getIdPost());
         postRepository.save(post);
-        LOGGER.debug("Post with id {} was updated in db", post.getIdPost());
+        LOGGER.debug("Post with idPost {} was updated in db", post.getIdPost());
     }
 
-    public void delete(Integer id) {
-        postRepository.deleteById(id);
+    public void delete(Integer idPost) {
+        postRepository.deleteById(idPost);
     }
 
-    public List<PostDTO> findPersons() {
-        return null;
-    }
 }

@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonService.class);
     private final PersonRepository personRepository;
-
 
     @Autowired
     public PersonService(PersonRepository personRepository) {
@@ -44,7 +44,7 @@ public class PersonService {
 
         if (!prosumerOptional.isPresent()) {
             LOGGER.error("Person with idPerson {} was not found in db", idPerson);
-            throw new ResourceNotFoundException(Person.class.getSimpleName() + " with id: " + idPerson);
+            throw new ResourceNotFoundException(Person.class.getSimpleName() + " with idPerson: " + idPerson);
         }
         return PersonBuilder.toPersonDTO(prosumerOptional.get());
     }

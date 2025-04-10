@@ -5,8 +5,10 @@ import ro.tuc.ds2020.entities.Tag;
 
 public class TagBuilder {
 
+    private TagBuilder() {}
+
     public static TagDTO toTagDTO(Tag tag) {
-        return new TagDTO(tag.getId(), tag.getName());
+        return new TagDTO(tag.getIdTag(), tag.getName());
     }
     public static Tag toEntity(TagDTO dto) {
         return new Tag(dto.getName());

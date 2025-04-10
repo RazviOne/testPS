@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-public class Post  implements Serializable{
+public class Post implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +17,9 @@ public class Post  implements Serializable{
 
     @Column(name = "idParent", nullable = true)
     private Integer idParent;
+
+    @Column(name = "idTag", nullable = true)
+    private Integer idTag;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -30,6 +33,7 @@ public class Post  implements Serializable{
     @Column(name = "status", nullable = false)
     private String status;
 
+    @Lob
     @Column(name = "image", nullable = true)
     private byte[] image;
 
@@ -42,10 +46,11 @@ public class Post  implements Serializable{
     public Post() {
     }
 
-    public Post(Integer idPerson, Integer idParent, String title, String text, LocalDateTime dateCreated,
+    public Post(Integer idPerson, Integer idParent, Integer idTag, String title, String text, LocalDateTime dateCreated,
                 String status, byte[] image, Integer totalVotes, Boolean noMoreComments) {
         this.idPerson = idPerson;
         this.idParent = idParent;
+        this.idTag = idTag;
         this.title = title;
         this.text = text;
         this.dateCreated = dateCreated;
@@ -77,6 +82,14 @@ public class Post  implements Serializable{
 
     public void setIdParent(Integer idParent) {
         this.idParent = idParent;
+    }
+
+    public Integer getIdTag() {
+        return idTag;
+    }
+
+    public void setIdTag(Integer idTag) {
+        this.idTag = idTag;
     }
 
     public String getTitle() {

@@ -4,7 +4,6 @@ import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 public class PersonDTO extends RepresentationModel<PersonDTO> {
@@ -30,8 +29,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO> {
     private String homeCity;
 
 
-    public PersonDTO() {
-    }
+    public PersonDTO() {}
 
     public PersonDTO(Integer idPerson, String name, String username, String password, Integer userScore,
                      Boolean isAdmin, Boolean isBanned, String email, String phoneNumber, LocalDateTime birthDate,

@@ -5,8 +5,7 @@ import ro.tuc.ds2020.entities.Person;
 
 public class PersonBuilder {
 
-    private PersonBuilder() {
-    }
+    private PersonBuilder() {}
 
     public static PersonDTO toPersonDTO(Person person) {
         return new PersonDTO(person.getIdPerson(), person.getName(), person.getUsername(), person.getPassword(),

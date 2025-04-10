@@ -1,4 +1,4 @@
-package src.test.java.ro.tuc.ds2020.controllers;
+package src.test.java.ro.tuc.ds2020.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import src.main.java.ro.tuc.ds2020.controllers.ReactionController;
+import ro.tuc.ds2020.controllers.ReactionController;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 

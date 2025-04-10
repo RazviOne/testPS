@@ -9,14 +9,15 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
-    List<Post> findByIdPerson(Integer idPerson);
+//    List<Post> findByIdPerson(Integer idPerson);
+//
+//    List<Post> findByStatus(String status);
+//
+//    @Query("SELECT p FROM Post p WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+//    List<Post> searchByTitle(@Param("keyword") String keyword);
+//
+//    List<Post> findAllByOrderByTotalVotesDesc();
+//
+//    List<Post> findByNoMoreCommentsTrue();
 
-    List<Post> findByStatus(String status);
-
-    @Query("SELECT p FROM Post p WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    List<Post> searchByTitle(@Param("keyword") String keyword);
-
-    List<Post> findAllByOrderByTotalVotesDesc();
-
-    List<Post> findByNoMoreCommentsTrue();
 }
