@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import ro.tuc.ds2020.Ds2020TestConfig;
 import ro.tuc.ds2020.dtos.PostDTO;
-import ro.tuc.ds2020.dtos.PostDetailsDTO;
 
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 

@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.tuc.ds2020.dtos.PostDTO;
-import ro.tuc.ds2020.dtos.PostDetailsDTO;
 import ro.tuc.ds2020.services.PostService;
 
 import javax.validation.Valid;
