@@ -6,5 +6,7 @@ import ro.tuc.ds2020.entities.Tag;
 import java.util.Optional;
 
 public interface TagRepository extends JpaRepository<Tag, Integer> {
-    Optional<Tag> findByName(String name);
+
+//    Optional<Tag> findByName(String name);
+
 }

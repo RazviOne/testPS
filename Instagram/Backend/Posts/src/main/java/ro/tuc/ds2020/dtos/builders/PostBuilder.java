@@ -11,15 +11,24 @@ public class PostBuilder {
     public static PostDTO toPostDTO(Post post) {
         return new PostDTO(
                 post.getIdPost(),
+                post.getIdPerson(),
+                post.getIdParent(),
+                post.getIdTag(),
                 post.getTitle(),
+                post.getText(),
+                post.getDateCreated(),
                 post.getStatus(),
-                post.getTotalVotes()
+                post.getImage(),
+                post.getTotalVotes(),
+                post.getNoMoreComments()
         );
     }
 
     public static Post toEntity(PostDTO dto) {
         return new Post(
-                dto.get(),
+                dto.getIdPerson(),
+                dto.getIdParent(),
+                dto.getIdTag(),
                 dto.getTitle(),
                 dto.getText(),
                 dto.getDateCreated(),

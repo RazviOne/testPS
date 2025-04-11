@@ -42,8 +42,7 @@ public class Person  implements Serializable {
     @Column(name = "homeCity", nullable = true)
     private String homeCity;
 
-    public Person() {
-    }
+    public Person() {}
 
     public Person(String name, String username, String password, Integer userScore, Boolean isAdmin, Boolean isBanned,
                   String email, String phoneNumber, LocalDateTime birthDate, String homeCity) {

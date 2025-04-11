@@ -49,4 +49,5 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
 //            "WHERE p.isAdmin = true")
 //    List<Person> findByUsername();
     Optional<Person> findByUsername(@Param("username") String username);
+
 }

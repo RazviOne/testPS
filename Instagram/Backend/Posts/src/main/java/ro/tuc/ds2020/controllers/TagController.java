@@ -1,14 +1,20 @@
 package ro.tuc.ds2020.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ro.tuc.ds2020.dtos.PostTagDTO;
 import ro.tuc.ds2020.dtos.TagDTO;
+import ro.tuc.ds2020.services.PostTagService;
 import ro.tuc.ds2020.services.TagService;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/tags")
@@ -16,40 +22,83 @@ import java.util.List;
 public class TagController {
 
     private final TagService tagService;
+    private final PostTagService postTagService;
 
     @Autowired
-    public TagController(TagService tagService) {
+    public TagController(TagService tagService, PostTagService postTagService) {
         this.tagService = tagService;
+        this.postTagService = postTagService;
     }
 
     @GetMapping
     public ResponseEntity<List<TagDTO>> getTags() {
-        return new ResponseEntity<>(tagService.findTags(), HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<TagDTO> getTagById(@PathVariable Integer id) {
-        try {
-            return new ResponseEntity<>(tagService.findById(id), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<TagDTO> dtos = tagService.findTags();
+        for (TagDTO dto : dtos) {
+            Link tagLink = linkTo(methodOn(TagController.class)
+                    .getTagById(dto.getIdTag())).withRel("tagDetails");
+            dto.add(tagLink);
         }
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Integer> insert(@RequestBody @Valid TagDTO dto) {
-        return new ResponseEntity<>(tagService.insert(dto), HttpStatus.CREATED);
+    public ResponseEntity<Integer> insertTag(@Valid @RequestBody TagDTO tagDTO) {
+        Integer idTag = tagService.insert(tagDTO);
+        return new ResponseEntity<>(idTag, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody @Valid TagDTO dto) {
-        tagService.update(id, dto);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<TagDTO> getTagById(@PathVariable("id") Integer idTag) {
+        TagDTO failedDto = new TagDTO();
+        failedDto.setIdTag(-1);
+        try {
+            TagDTO dto = tagService.findTagById(idTag);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(failedDto, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<TagDTO> updateTag(@Valid @RequestBody TagDTO tagDTO,
+                                            @PathVariable("id") Integer idTag) {
+        TagDTO failedDto = new TagDTO();
+        failedDto.setIdTag(-1);
+        try {
+            tagService.findTagById(idTag);
+            tagDTO.setIdTag(idTag);
+            tagService.update(tagDTO);
+            return new ResponseEntity<>(tagDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(failedDto, HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        tagService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<TagDTO> deleteTag(@PathVariable("id") Integer idTag) {
+        TagDTO failedDto = new TagDTO();
+        failedDto.setIdTag(-1);
+        try {
+            TagDTO dto = tagService.findTagById(idTag);
+            tagService.delete(idTag);
+
+            try {
+                // Database Syncronization
+                // Delete all PostTags that contain the deleted Tag
+                List<PostTagDTO> postTagDTOList =  postTagService.findPostTags();
+                for (PostTagDTO postTagDTO : postTagDTOList) {
+                    if(postTagDTO.getIdTag().equals(idTag)) {
+                        postTagService.delete(postTagDTO.getIdPostTag());
+                    }
+                }
+
+                return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(failedDto, HttpStatus.NOT_FOUND);
+        }
     }
+
 }

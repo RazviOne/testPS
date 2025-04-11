@@ -1,4 +1,4 @@
-package src.test.java.ro.tuc.ds2020;
+package ro.tuc.ds2020;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -6,7 +6,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import src.main.java.ro.tuc.ds2020.Ds2020Application;
+import ro.tuc.ds2020.Ds2020Application;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = Ds2020Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
